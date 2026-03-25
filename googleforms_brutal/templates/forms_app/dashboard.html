@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-0">Mis formularios</h1>
+    <p class="text-muted mb-0">Crea, distribuye y mide como Google Forms.</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'form_create' %}">+ Nuevo formulario</a>
+</div>
+
+<div class="row g-3">
+  {% for form in forms %}
+  <div class="col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">{{ form.title }}</h2>
+        <p class="text-muted small">{{ form.description|default:'Sin descripción' }}</p>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="badge text-bg-primary">{{ form.questions.count }} preguntas</span>
+          <span class="badge text-bg-success">{{ form.responses.count }} respuestas</span>
+        </div>
+      </div>
+      <div class="card-footer bg-white d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'form_edit' form.pk %}">Editar</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'option_manage' form.pk %}">Opciones</a>
+        <a class="btn btn-outline-success btn-sm" href="{% url 'form_analytics' form.pk %}">Indicadores</a>
+        <a class="btn btn-dark btn-sm" href="{% url 'form_fill' form.pk %}">Enlace público</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12"><div class="alert alert-info">No tienes formularios todavía.</div></div>
+  {% endfor %}
+</div>
+{% endblock %}

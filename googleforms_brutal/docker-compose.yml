@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: formsdb
+      POSTGRES_USER: formsuser
+      POSTGRES_PASSWORD: formspassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U formsuser -d formsdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DEBUG: 0
+      DJANGO_SECRET_KEY: super-secret-change-me
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      POSTGRES_DB: formsdb
+      POSTGRES_USER: formsuser
+      POSTGRES_PASSWORD: formspassword
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
