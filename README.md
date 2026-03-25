@@ -1,9 +1,5 @@
 # 🚨 FormForge Brutal
 
-<p align="center">
-  <img src="https://img.icons8.com/color/200/forms.png" alt="FormForge Logo" width="200"/>
-</p>
-
 ---
 
 ## 📱 Descripción
