@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h1 class="h4">Editar {{ form_instance.title }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form_form.as_p }}
+      <hr />
+      <h2 class="h5">Preguntas</h2>
+      {{ question_formset.management_form }}
+      {% for form in question_formset %}
+        <div class="border rounded p-3 mb-2">
+          {{ form.as_p }}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

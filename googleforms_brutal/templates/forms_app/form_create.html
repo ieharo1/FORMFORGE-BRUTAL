@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">Crear formulario</h1>
+    <form method="post" class="row g-3">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary">Guardar y continuar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

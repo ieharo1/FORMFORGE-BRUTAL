@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load form_extras %}
+{% block content %}
+<h1 class="h3">Indicadores - {{ form_instance.title }}</h1>
+<div class="alert alert-dark">Total de respuestas: <strong>{{ total_responses }}</strong></div>
+
+{% for question in form_instance.questions.all %}
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h2 class="h5">{{ question.label }}</h2>
+      {% with data=analytics|dict_get:question.id %}
+        {% for key, value in data.items %}
+          <div class="d-flex justify-content-between"><span>{{ key }}</span><strong>{{ value }}</strong></div>
+          {% if total_responses > 0 %}
+            <div class="progress mb-2">
+              <div class="progress-bar" role="progressbar" style="width: {% widthratio value total_responses 100 %}%">
+                {% widthratio value total_responses 100 %}%
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
